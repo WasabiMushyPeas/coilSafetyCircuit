@@ -4280,6 +4280,16 @@
 	)
 	(wire
 		(pts
+			(xy 102.87 116.84) (xy 102.87 115.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "899ba120-89ec-4d3c-8ea1-01e335214361")
+	)
+	(wire
+		(pts
 			(xy 25.4 184.15) (xy 25.4 186.69)
 		)
 		(stroke
@@ -4617,6 +4627,16 @@
 			(type default)
 		)
 		(uuid "cc20c5a9-5176-43b4-ab35-a37dea6d5699")
+	)
+	(wire
+		(pts
+			(xy 109.22 116.84) (xy 102.87 116.84)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cf447ec0-c308-4816-a894-a776e643328d")
 	)
 	(wire
 		(pts
@@ -5653,7 +5673,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "TerminalBlock:TerminalBlock_bornier-2_P5.08mm"
 			(at 67.31 148.59 0)
 			(effects
 				(font
@@ -5790,7 +5810,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "TerminalBlock:TerminalBlock_bornier-2_P5.08mm"
 			(at 237.49 16.51 0)
 			(effects
 				(font
@@ -5993,7 +6013,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "TerminalBlock:TerminalBlock_bornier-2_P5.08mm"
 			(at 245.11 22.86 0)
 			(effects
 				(font
@@ -7098,6 +7118,72 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+5V")
+		(at 102.87 115.57 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "d9e3c0b6-ed19-483d-bd09-1f93a511ce7a")
+		(property "Reference" "#PWR011"
+			(at 102.87 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 102.87 110.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 102.87 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 102.87 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 102.87 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "9c426e70-bb0e-42e8-81c0-7a63cda3b6fd")
+		)
+		(instances
+			(project ""
+				(path "/81435b52-0125-497d-af5b-c0831d6a55aa"
+					(reference "#PWR011")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "sensors:AZ943-1CH-12DE")
 		(at 67.31 172.72 0)
 		(unit 1)
@@ -7123,7 +7209,7 @@
 				)
 			)
 		)
-		(property "Footprint" "AZ943-1CH_AMZ"
+		(property "Footprint" "Footprints:AZ943-1CH-12DE"
 			(at 67.31 172.72 0)
 			(effects
 				(font
