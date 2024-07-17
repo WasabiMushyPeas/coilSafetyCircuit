@@ -10,8 +10,7 @@ This safety circuit uses an ESP32 C6 to detect temperature fluctuations or moist
 - **Pump Power:** 12v 5A
 
 
-### Parts List
-parts to upgrade 1 strip
+## Parts List
 
 | Part | Quantity | Price |
 | ---- | -------- | ----- |
