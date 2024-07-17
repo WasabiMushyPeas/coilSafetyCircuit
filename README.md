@@ -1,5 +1,4 @@
 # Coil Safety Circuit
-------
 
 ## Introduction
 This safety circuit uses an ESP32 C6 to detect temperature fluctuations or moisture build up on and electromagnet, and shutting off the coils via relay if needed. The ESP32 also hosts a network and webpage to monitor the status of the coils and set the temperature threshold.
