@@ -123,6 +123,42 @@ void loop()
               outputLEDState = "off";
               digitalWrite(RGB_BUILTIN, LOW);
             }
+            else if (header.indexOf("GET /6/on") >= 0)
+            {
+              Serial.println("GPIO 6 on");
+              output6State = "on";
+              digitalWrite(output6Pump, HIGH);
+            }
+            else if (header.indexOf("GET /6/off") >= 0)
+            {
+              Serial.println("GPIO 6 off");
+              output6State = "off";
+              digitalWrite(output6Pump, LOW);
+            }
+            else if (header.indexOf("GET /22/on") >= 0)
+            {
+              Serial.println("GPIO 22 on");
+              output22State = "on";
+              digitalWrite(output22Coil, HIGH);
+            }
+            else if (header.indexOf("GET /22/off") >= 0)
+            {
+              Serial.println("GPIO 22 off");
+              output22State = "off";
+              digitalWrite(output22Coil, LOW);
+            }
+            else if (header.indexOf("GET /23/on") >= 0)
+            {
+              Serial.println("GPIO 23 on");
+              output23State = "on";
+              digitalWrite(output23Coil, HIGH);
+            }
+            else if (header.indexOf("GET /23/off") >= 0)
+            {
+              Serial.println("GPIO 23 off");
+              output23State = "off";
+              digitalWrite(output23Coil, LOW);
+            }
 
             // Display the HTML web page
             client.println("<!DOCTYPE html><html>");
@@ -136,10 +172,10 @@ void loop()
             client.println(".button2 {background-color: #555555;}</style></head>");
 
             // Web Page Heading
-            client.println("<body><h1>ESP32 Web Server</h1>");
+            client.println("<body><h1>ESP32 Coil Control Center</h1>");
 
-            // Display current state, and ON/OFF buttons for GPIO 26
-            client.println("<p>GPIO 26 - State " + outputLEDState + "</p>");
+            // Display current state, and ON/OFF buttons for GPIO LED
+            client.println("<p>LED - " + outputLEDState + "</p>");
             // If the output26State is off, it displays the ON button
             if (outputLEDState == "off")
             {
@@ -148,6 +184,42 @@ void loop()
             else
             {
               client.println("<p><a href=\"/LED/off\"><button class=\"button button2\">OFF</button></a></p>");
+            }
+
+            // Display current state, and ON/OFF buttons for GPIO 6
+            client.println("<p>Pump - " + output6State + "</p>");
+            // If the output6State is off, it displays the ON button
+            if (output6State == "off")
+            {
+              client.println("<p><a href=\"/6/on\"><button class=\"button\">ON</button></a></p>");
+            }
+            else
+            {
+              client.println("<p><a href=\"/6/off\"><button class=\"button button2\">OFF</button></a></p>");
+            }
+
+            // Display current state, and ON/OFF buttons for GPIO 22
+            client.println("<p>Coil 1 - " + output22State + "</p>");
+            // If the output22State is off, it displays the ON button
+            if (output22State == "off")
+            {
+              client.println("<p><a href=\"/22/on\"><button class=\"button\">ON</button></a></p>");
+            }
+            else
+            {
+              client.println("<p><a href=\"/22/off\"><button class=\"button button2\">OFF</button></a></p>");
+            }
+
+            // Display current state, and ON/OFF buttons for GPIO 23
+            client.println("<p>Coil 2 - " + output23State + "</p>");
+            // If the output23State is off, it displays the ON button
+            if (output23State == "off")
+            {
+              client.println("<p><a href=\"/23/on\"><button class=\"button\">ON</button></a></p>");
+            }
+            else
+            {
+              client.println("<p><a href=\"/23/off\"><button class=\"button button2\">OFF</button></a></p>");
             }
 
             client.println("</body></html>");
