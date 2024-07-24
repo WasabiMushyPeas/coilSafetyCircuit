@@ -194,10 +194,9 @@ void loop()
             client.println("<!DOCTYPE html>");
             client.println("<style> .tooltip { position: relative; display: inline-block; } .tooltip .tooltiptext { visibility: hidden; background-color: #E0E3F4; color: #000; text-align: center; border-radius: 5px; padding: 5px 0; /* Position the tooltip */ position: absolute; z-index: 1; top: -35px; } .tooltip:hover .tooltiptext { visibility: visible; } .tooltip:active .tooltiptext { visibility: visible; } a:hover { scale: 1.1; transition: 0.5s; } </style>");
             client.println("<html lang=\" en \"> <head> <meta charset=\" UTF - 8 \"> <meta name=\" viewport \" content=\" width = device - width, initial - scale = 1.0 \"> <title>Coil Control Panel</title> </head>");
-            client.println("<body> <div style=\" text - align : center; display : flex; flex - wrap : wrap; justify - content : center; flex-direction : column; align-items : center; \"> <h1>Coil Control Panel</h1> <div style=\" display : flex; justify - content : center; background-color: #EEECF4; width : 90 % ; padding : 20px; border-radius : 5px; margin - top : 20px; margin - bottom : 20px; \">");
+            client.println("<body> <div style=\" text-align : center; display : flex; flex-wrap : wrap; justify-content : center; flex-direction : column; align-items : center; \"> <h1>Coil Control Panel</h1> <div style=\" display : flex; justify-content : center; background-color: #EEECF4; width : 90% ; padding : 20px; border-radius : 5px; margin-top : 20px; margin-bottom : 20px; \">");
 
             // Display current state, and ON/OFF buttons for GPIO 22
-            client.println("<p>Coil 1 - " + output22State + "</p>");
             // If the output22State is off, it displays the ON button
             if (output22State == "off")
             {
@@ -209,7 +208,6 @@ void loop()
             }
 
             // Display current state, and ON/OFF buttons for GPIO 23
-            client.println("<p>Coil 2 - " + output23State + "</p>");
             // If the output23State is off, it displays the ON button
             if (output23State == "off")
             {
@@ -221,7 +219,6 @@ void loop()
             }
 
             // Display current state, and ON/OFF buttons for GPIO 6
-            client.println("<p>Pump - " + output6State + "</p>");
             // If the output6State is off, it displays the ON button
             if (output6State == "off")
             {
@@ -234,17 +231,17 @@ void loop()
 
             client.println("</div>");
 
-            client.println("<div style=\" display : flex; justify-content : center; flex - wrap : wrap; background-color: #EEECF4; width : 90 % ; padding : 20px; border-radius : 5px; margin - top : 25px; margin - bottom : 25px; \"> <div class=\" tooltip \" style=\" display : flex; flex-direction : column; align-items : center; margin : 20px; background-color: #F7F5FF; padding : 20px; border-radius : 5px; \"> <h1>Coils</h1> <h2>Temp Avg: " + tempAvg + "°C</h2> <h2>Moisture: " + moistureTotal + "</h2> <span class=\" tooltiptext \"> <div style=\" display : flex; align-items : center; \"> <div style=\" margin : 30px; \"> <h2>Coil 1</h2> <h3>Temp 1: " + temp1 + "°C</h3> <h3>Temp 2: " + temp2 + "°C</h3> <h3>Moisture: " + moisture1 + "</h3> </div> <div style=\" margin : 30px; \"> <h2>Coil 2</h2> <h3>Temp 1: " + temp3 + "°C</h3> <h3>Temp 2: " + temp4 + "°C</h3> <h3>Moisture: " + moisture2 + "</h3> </div> </div> </span> </div> </div>");
+            client.println("<div style=\" display : flex; justify-content : center; flex-wrap : wrap; background-color: #EEECF4; width : 90% ; padding : 20px; border-radius : 5px; margin-top : 25px; margin-bottom : 25px; \"> <div class=\" tooltip \" style=\" display : flex; flex-direction : column; align-items : center; margin : 20px; background-color: #F7F5FF; padding : 20px; border-radius : 5px; \"> <h1>Coils</h1> <h2>Temp Avg: " + String(tempAvg) + "°C</h2> <h2>Moisture: " + String(moistureTotal) + "</h2> <span class=\" tooltiptext \"> <div style=\" display : flex; align-items : center; \"> <div style=\" margin : 30px; \"> <h2>Coil 1</h2> <h3>Temp 1: " + String(temp1) + "°C</h3> <h3>Temp 2: " + String(temp2) + "°C</h3> <h3>Moisture: " + String(moisture1) + "</h3> </div> <div style=\" margin : 30px; \"> <h2>Coil 2</h2> <h3>Temp 1: " + String(temp3) + "°C</h3> <h3>Temp 2: " + String(temp4) + "°C</h3> <h3>Moisture: " + String(moisture2) + "</h3> </div> </div> </span> </div> </div>");
 
             client.println("<div style=\"display: flex; justify-content: center; flex-wrap: wrap; background-color: #EEECF4; width: 90%; padding: 20px; border-radius: 5px; margin-top: 25px; margin-bottom: 25px;\">");
 
             if (coilTempShutOff == "off")
             {
-              client.println("<a href=\"/Temp/on\" style=\" text-decoration : none; color: black; \"> <div style=\" margin : 30px; background-color: #FD8A8A; padding : 20px; border-radius : 5px; padding-left : 35px; padding-right : 35px; display : flex; flex-direction : column; align-items : center; \"> <div> <h2>Temp Coil Shut Off</h2> <h3> " + coilShutoffTemp + "°C</h3> </div> <div> <a href=\"/Temp/-\" style=\"text-decoration: none; color: black; \"> <button style=\" height : 40px; width : 45px; font - size : 30px; margin : 15px; border-radius : 5px; \">-</button> </a> <a href=\"/Temp/+\" style=\"text-decoration: none; color: black; \"> <button style=\" height : 40px; width : 45px; font - size : 30px; margin : 15px; border-radius : 5px; \">+</button> </a> </div> </div> </a>");
+              client.println("<a href=\"/Temp/on\" style=\" text-decoration : none; color: black; \"> <div style=\" margin : 30px; background-color: #FD8A8A; padding : 20px; border-radius : 5px; padding-left : 35px; padding-right : 35px; display : flex; flex-direction : column; align-items : center; \"> <div> <h2>Temp Coil Shut Off</h2> <h3> " + String(coilShutoffTemp) + "°C</h3> </div> <div> <a href=\"/Temp/-\" style=\"text-decoration: none; color: black; \"> <button style=\" height : 40px; width : 45px; font - size : 30px; margin : 15px; border-radius : 5px; \">-</button> </a> <a href=\"/Temp/+\" style=\"text-decoration: none; color: black; \"> <button style=\" height : 40px; width : 45px; font - size : 30px; margin : 15px; border-radius : 5px; \">+</button> </a> </div> </div> </a>");
             }
             else
             {
-              client.println("<a href=\"/Temp/off\" style=\" text-decoration : none; color: black; \"> <div style=\" margin : 30px; background-color: #A8D1D1; padding : 20px; border-radius : 5px; padding-left : 35px; padding-right : 35px; display : flex; flex-direction : column; align-items : center; \"> <div> <h2>Temp Coil Shut Off</h2> <h3> " + coilShutoffTemp + "°C</h3> </div> <div> <a href=\"/Temp/-\" style=\"text-decoration: none; color: black; \"> <button style=\" height : 40px; width : 45px; font - size : 30px; margin : 15px; border-radius : 5px; \">-</button> </a> <a href=\"/Temp/+\" style=\"text-decoration: none; color: black; \"> <button style=\" height : 40px; width : 45px; font - size : 30px; margin : 15px; border-radius : 5px; \">+</button> </a> </div> </div> </a>");
+              client.println("<a href=\"/Temp/off\" style=\" text-decoration : none; color: black; \"> <div style=\" margin : 30px; background-color: #A8D1D1; padding : 20px; border-radius : 5px; padding-left : 35px; padding-right : 35px; display : flex; flex-direction : column; align-items : center; \"> <div> <h2>Temp Coil Shut Off</h2> <h3> " + String(coilShutoffTemp) + "°C</h3> </div> <div> <a href=\"/Temp/-\" style=\"text-decoration: none; color: black; \"> <button style=\" height : 40px; width : 45px; font - size : 30px; margin : 15px; border-radius : 5px; \">-</button> </a> <a href=\"/Temp/+\" style=\"text-decoration: none; color: black; \"> <button style=\" height : 40px; width : 45px; font - size : 30px; margin : 15px; border-radius : 5px; \">+</button> </a> </div> </div> </a>");
             }
 
             if (coilPumpMoistureShutOff == "off")
