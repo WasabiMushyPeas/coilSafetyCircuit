@@ -168,7 +168,7 @@ void loop()
 
   tempAvg = (temp1 + temp2 + temp3 + temp4) / 4;
 
-  if (digitalRead(input20Moisture) == "HIGH")
+  if (digitalRead(input20Moisture) == 1)
   {
     moisture1 = 1;
   }
@@ -177,7 +177,7 @@ void loop()
     moisture1 = 0;
   }
 
-  if (digitalRead(input21Moisture) == "HIGH")
+  if (digitalRead(input21Moisture) == 1)
   {
     moisture2 = 1;
   }
