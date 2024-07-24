@@ -2,14 +2,15 @@
 Written By Jackson McDowell for the Biedermann Lab
 07/2024
 
-Follow https://randomnerdtutorials.com/esp32-access-point-ap-web-server/ for more information
+Follow https://randomnerdtutorials.com/esp32-access-point-ap-web-server/ for more information on the WIFI AP Web Server
+Follow https://learn.adafruit.com/thermistor/using-a-thermistor for more information on thermistors
 */
 
 #include <WiFi.h>
 
 // Network AP credentials
 const char *ssid = "ESP32-Access-Point";
-const char *password = "strontium";
+const char *password = "rydberg12";
 
 // Set web server port number to 80
 WiFiServer server(80);
@@ -31,6 +32,9 @@ String coilPumpMoistureShutOff = "off";
 // RGB LED
 String outputLEDState = "off";
 
+// LED Error code
+String outputErrorState = "none";
+
 // Assign output variables to GPIO pins
 const int output6Pump = 6;
 const int output22Coil = 22;
@@ -39,10 +43,10 @@ const int output23Coil = 23;
 // Assign input variables to GPIO pins
 
 // Thermistors
-const int input2Thermistor = 2;
-const int input3Thermistor = 3;
-const int input4Thermistor = 4;
-const int input5Thermistor = 5;
+const int input2Thermistor = A2;
+const int input3Thermistor = A3;
+const int input4Thermistor = A4;
+const int input5Thermistor = A5;
 
 // Moisture Sensors
 const int input20Moisture = 20;
@@ -59,9 +63,70 @@ int moisture2;
 int moistureTotal;
 int coilShutoffTemp = 60;
 
+// Thermistor Variables (Fine tuning may be needed)
+
+// resistance at 25 degrees C
+#define THERMISTORNOMINAL 10000
+// temp. for nominal resistance (almost always 25 C)
+#define TEMPERATURENOMINAL 25
+// how many samples to take and average, more takes longer
+// but is more 'smooth'
+#define NUMSAMPLES 5
+// The beta coefficient of the thermistor (usually 3000-4000)
+#define BCOEFFICIENT 3950
+// the value of the 'other' resistor
+#define SERIESRESISTOR 10000
+
+int samples[NUMSAMPLES];
+
+float thermistorTemp(int pin)
+{
+  uint8_t i;
+  float average;
+
+  // take N samples in a row, with a slight delay
+  for (i = 0; i < NUMSAMPLES; i++)
+  {
+    samples[i] = analogRead(pin);
+    delay(10);
+  }
+
+  // average all the samples out
+  average = 0;
+  for (i = 0; i < NUMSAMPLES; i++)
+  {
+    average += samples[i];
+  }
+  average /= NUMSAMPLES;
+
+  Serial.print("Average analog reading ");
+  Serial.println(average);
+
+  // convert the value to resistance
+  average = 1023 / average - 1;
+  average = SERIESRESISTOR / average;
+  Serial.print("Thermistor resistance ");
+  Serial.println(average);
+
+  float steinhart;
+  steinhart = average / THERMISTORNOMINAL;          // (R/Ro)
+  steinhart = log(steinhart);                       // ln(R/Ro)
+  steinhart /= BCOEFFICIENT;                        // 1/B * ln(R/Ro)
+  steinhart += 1.0 / (TEMPERATURENOMINAL + 273.15); // + (1/To)
+  steinhart = 1.0 / steinhart;                      // Invert
+  steinhart -= 273.15;                              // convert absolute temp to C
+
+  Serial.print("Temperature ");
+  Serial.print(steinhart);
+  Serial.println(" *C");
+
+  return steinhart;
+}
+
 void setup()
 {
   Serial.begin(115200);
+
   // Initialize the output variables as outputs
   pinMode(output6Pump, OUTPUT);
   pinMode(output22Coil, OUTPUT);
@@ -94,11 +159,85 @@ void setup()
 
 void loop()
 {
-  // Sensors
+  outputErrorState = "none";
+
+  temp1 = thermistorTemp(input2Thermistor);
+  temp2 = thermistorTemp(input3Thermistor);
+  temp3 = thermistorTemp(input4Thermistor);
+  temp4 = thermistorTemp(input5Thermistor);
+
+  tempAvg = (temp1 + temp2 + temp3 + temp4) / 4;
+
+  if (digitalRead(input20Moisture) == "HIGH")
+  {
+    moisture1 = 1;
+  }
+  else
+  {
+    moisture1 = 0;
+  }
+
+  if (digitalRead(input21Moisture) == "HIGH")
+  {
+    moisture2 = 1;
+  }
+  else
+  {
+    moisture2 = 0;
+  }
+
+  if (moisture1 == 1 || moisture2 == 1)
+  {
+    moistureTotal = 1;
+  }
+  else
+  {
+    moistureTotal = 0;
+  }
+
+  // Temp Coil Shut Off
+  if (coilTempShutOff == "on")
+  {
+    if (tempAvg >= coilShutoffTemp)
+    {
+      digitalWrite(output22Coil, LOW);
+      digitalWrite(output23Coil, LOW);
+      outputErrorState = "Temp";
+    }
+  }
+
+  // Pump/Moisture Coil Shut Off
+  if (coilPumpMoistureShutOff == "on")
+  {
+    if (moistureTotal == 1)
+    {
+      digitalWrite(output6Pump, LOW);
+      digitalWrite(output22Coil, LOW);
+      digitalWrite(output23Coil, LOW);
+      outputErrorState = "Moisture";
+    }
+  }
+
+  // LED Error Code
+  if (outputErrorState == "Temp")
+  {
+    neopixelWrite(RGB_BUILTIN, RGB_BRIGHTNESS, 0, 0);
+  }
+  else if (outputErrorState == "Moisture")
+  {
+    neopixelWrite(RGB_BUILTIN, 255, 94, 0);
+  }
+  else if (output23State == "on")
+  {
+    neopixelWrite(RGB_BUILTIN, 0, 0, RGB_BRIGHTNESS);
+  }
+  else
+  {
+    neopixelWrite(RGB_BUILTIN, 0, RGB_BRIGHTNESS, 0);
+  }
 
   // Wifi
   WiFiClient client = server.available(); // Listen for incoming clients
-
   if (client)
   {                                // If a new client connects,
     Serial.println("New Client."); // print a message out in the serial port
@@ -231,17 +370,17 @@ void loop()
 
             client.println("</div>");
 
-            client.println("<div style=\" display : flex; justify-content : center; flex-wrap : wrap; background-color: #EEECF4; width : 90% ; padding : 20px; border-radius : 5px; margin-top : 25px; margin-bottom : 25px; \"> <div class=\" tooltip \" style=\" display : flex; flex-direction : column; align-items : center; margin : 20px; background-color: #F7F5FF; padding : 20px; border-radius : 5px; \"> <h1>Coils</h1> <h2>Temp Avg: " + String(tempAvg) + "°C</h2> <h2>Moisture: " + String(moistureTotal) + "</h2> <span class=\" tooltiptext \"> <div style=\" display : flex; align-items : center; \"> <div style=\" margin : 30px; \"> <h2>Coil 1</h2> <h3>Temp 1: " + String(temp1) + "°C</h3> <h3>Temp 2: " + String(temp2) + "°C</h3> <h3>Moisture: " + String(moisture1) + "</h3> </div> <div style=\" margin : 30px; \"> <h2>Coil 2</h2> <h3>Temp 1: " + String(temp3) + "°C</h3> <h3>Temp 2: " + String(temp4) + "°C</h3> <h3>Moisture: " + String(moisture2) + "</h3> </div> </div> </span> </div> </div>");
+            client.println("<div style=\" display : flex; justify-content : center; flex-wrap : wrap; background-color: #EEECF4; width : 90% ; padding : 20px; border-radius : 5px; margin-top : 25px; margin-bottom : 25px; \"> <div class=\" tooltip \" style=\" display : flex; flex-direction : column; align-items : center; margin : 20px; background-color: #F7F5FF; padding : 20px; border-radius : 5px; \"> <h1>Coils</h1> <h2>Temp Avg: " + String(tempAvg) + "C</h2> <h2>Moisture: " + String(moistureTotal) + "</h2> <span class=\" tooltiptext \"> <div style=\" display : flex; align-items : center; \"> <div style=\" margin : 30px; \"> <h2>Coil 1</h2> <h3>Temp 1: " + String(temp1) + "C</h3> <h3>Temp 2: " + String(temp2) + "C</h3> <h3>Moisture: " + String(moisture1) + "</h3> </div> <div style=\" margin : 30px; \"> <h2>Coil 2</h2> <h3>Temp 1: " + String(temp3) + "C</h3> <h3>Temp 2: " + String(temp4) + "C</h3> <h3>Moisture: " + String(moisture2) + "</h3> </div> </div> </span> </div> </div>");
 
             client.println("<div style=\"display: flex; justify-content: center; flex-wrap: wrap; background-color: #EEECF4; width: 90%; padding: 20px; border-radius: 5px; margin-top: 25px; margin-bottom: 25px;\">");
 
             if (coilTempShutOff == "off")
             {
-              client.println("<a href=\"/Temp/on\" style=\" text-decoration : none; color: black; \"> <div style=\" margin : 30px; background-color: #FD8A8A; padding : 20px; border-radius : 5px; padding-left : 35px; padding-right : 35px; display : flex; flex-direction : column; align-items : center; \"> <div> <h2>Temp Coil Shut Off</h2> <h3> " + String(coilShutoffTemp) + "°C</h3> </div> <div> <a href=\"/Temp/-\" style=\"text-decoration: none; color: black; \"> <button style=\" height : 40px; width : 45px; font - size : 30px; margin : 15px; border-radius : 5px; \">-</button> </a> <a href=\"/Temp/+\" style=\"text-decoration: none; color: black; \"> <button style=\" height : 40px; width : 45px; font - size : 30px; margin : 15px; border-radius : 5px; \">+</button> </a> </div> </div> </a>");
+              client.println("<a href=\"/Temp/on\" style=\" text-decoration : none; color: black; \"> <div style=\" margin : 30px; background-color: #FD8A8A; padding : 20px; border-radius : 5px; padding-left : 35px; padding-right : 35px; display : flex; flex-direction : column; align-items : center; \"> <div> <h2>Temp Coil Shut Off</h2> <h3> " + String(coilShutoffTemp) + "C</h3> </div> <div> <a href=\"/Temp/-\" style=\"text-decoration: none; color: black; \"> <button style=\" height : 40px; width : 45px; font - size : 30px; margin : 15px; border-radius : 5px; \">-</button> </a> <a href=\"/Temp/+\" style=\"text-decoration: none; color: black; \"> <button style=\" height : 40px; width : 45px; font - size : 30px; margin : 15px; border-radius : 5px; \">+</button> </a> </div> </div> </a>");
             }
             else
             {
-              client.println("<a href=\"/Temp/off\" style=\" text-decoration : none; color: black; \"> <div style=\" margin : 30px; background-color: #A8D1D1; padding : 20px; border-radius : 5px; padding-left : 35px; padding-right : 35px; display : flex; flex-direction : column; align-items : center; \"> <div> <h2>Temp Coil Shut Off</h2> <h3> " + String(coilShutoffTemp) + "°C</h3> </div> <div> <a href=\"/Temp/-\" style=\"text-decoration: none; color: black; \"> <button style=\" height : 40px; width : 45px; font - size : 30px; margin : 15px; border-radius : 5px; \">-</button> </a> <a href=\"/Temp/+\" style=\"text-decoration: none; color: black; \"> <button style=\" height : 40px; width : 45px; font - size : 30px; margin : 15px; border-radius : 5px; \">+</button> </a> </div> </div> </a>");
+              client.println("<a href=\"/Temp/off\" style=\" text-decoration : none; color: black; \"> <div style=\" margin : 30px; background-color: #A8D1D1; padding : 20px; border-radius : 5px; padding-left : 35px; padding-right : 35px; display : flex; flex-direction : column; align-items : center; \"> <div> <h2>Temp Coil Shut Off</h2> <h3> " + String(coilShutoffTemp) + "C</h3> </div> <div> <a href=\"/Temp/-\" style=\"text-decoration: none; color: black; \"> <button style=\" height : 40px; width : 45px; font - size : 30px; margin : 15px; border-radius : 5px; \">-</button> </a> <a href=\"/Temp/+\" style=\"text-decoration: none; color: black; \"> <button style=\" height : 40px; width : 45px; font - size : 30px; margin : 15px; border-radius : 5px; \">+</button> </a> </div> </div> </a>");
             }
 
             if (coilPumpMoistureShutOff == "off")
