@@ -160,6 +160,36 @@ void loop()
               output23State = "off";
               digitalWrite(output23Coil, LOW);
             }
+            else if (header.indexOf("GET /Temp/on") >= 0)
+            {
+              Serial.println("Temp Coil Shut Off on");
+              coilTempShutOff = "on";
+            }
+            else if (header.indexOf("GET /Temp/off") >= 0)
+            {
+              Serial.println("Temp Coil Shut Off off");
+              coilTempShutOff = "off";
+            }
+            else if (header.indexOf("GET /PumpMoisture/on") >= 0)
+            {
+              Serial.println("Pump/Moisture Coil Shut Off on");
+              coilPumpMoistureShutOff = "on";
+            }
+            else if (header.indexOf("GET /PumpMoisture/off") >= 0)
+            {
+              Serial.println("Pump/Moisture Coil Shut Off off");
+              coilPumpMoistureShutOff = "off";
+            }
+            else if (header.indexOf("GET /Temp/-") >= 0)
+            {
+              Serial.println("Temp Coil Shut Off -");
+              coilShutoffTemp--;
+            }
+            else if (header.indexOf("GET /Temp/+") >= 0)
+            {
+              Serial.println("Temp Coil Shut Off +");
+              coilShutoffTemp++;
+            }
 
             client.println("<!DOCTYPE html>");
             client.println("<style> .tooltip { position: relative; display: inline-block; } .tooltip .tooltiptext { visibility: hidden; background-color: #E0E3F4; color: #000; text-align: center; border-radius: 5px; padding: 5px 0; /* Position the tooltip */ position: absolute; z-index: 1; top: -35px; } .tooltip:hover .tooltiptext { visibility: visible; } .tooltip:active .tooltiptext { visibility: visible; } a:hover { scale: 1.1; transition: 0.5s; } </style>");
