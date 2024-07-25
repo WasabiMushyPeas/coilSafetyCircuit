@@ -5,7 +5,7 @@ This safety circuit uses an ESP32 C6 to detect temperature fluctuations or moist
 
 ## Specifications :clipboard:
 - **Power Supply:** USB-C cable to micro controller
-- **Max Continuous Coil Power:** 65v 5A
+- **Max Continuous Coil Power (Each coil):** 65v 5A
 - **Max Burst Coil Power:** 65v 35A
 - **Pump Power:** 12v 5A
 - **Temperature Sensors:** 4 thermistors with an accuracy of ±0.25°C
