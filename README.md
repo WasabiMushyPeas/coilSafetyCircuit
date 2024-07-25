@@ -1,6 +1,6 @@
-# Coil Safety Circuit
+# Coil Safety Circuit :electric_plug:
 
-## Introduction
+## Introduction :wave:
 This safety circuit uses an ESP32 C6 to detect temperature fluctuations or moisture build up on an electromagnet. It can shut off the coils via relay if needed. The ESP32 also hosts a network and webpage to monitor the status of the coils and set the temperature shut off threshold.
 
 ## Specifications :clipboard:
@@ -81,3 +81,8 @@ Some things that could be added or changed:
 - When connected to the network the control page should pop up automatically using captive portals
 - Add a way for ESP32 to get power from the pump power supply
 - connect the ESP32 to the lab warning system and trigger when the coils get too hot or wet
+
+## More Information :mag_right:
+
+Wifi Tutorial: [Wifi Web Server](https://randomnerdtutorials.com/esp32-access-point-ap-web-server/)
+Thermistor Tutorial: [Thermistor](https://learn.adafruit.com/thermistor/using-a-thermistor)
