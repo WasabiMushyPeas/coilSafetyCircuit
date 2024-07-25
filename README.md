@@ -46,12 +46,12 @@ The webpage can be accessed by connect to the ESP32 network and typing the IP ad
 
 The network name is:
 ```
-SSID: ESP32-Access-Point
+ESP32-Access-Point
 ```
 
 The password is:
 ```
-Password: rydberg12
+rydberg12
 ```
 
 The default IP address is:
