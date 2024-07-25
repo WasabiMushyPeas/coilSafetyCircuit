@@ -34,8 +34,14 @@ This safety circuit uses an ESP32 C6 to detect temperature fluctuations or moist
 
 ![screenshot](/Pictures/website.png)
 
-This picture shows the default settings and appearance of the ESP32 webpage. The user can change the state of the coils and the pump with the three buttons in the top row. If a button is coloured red then that setting or component is off (no relay is open). All coils are off by default and the pump remains on. The user can also turn on and off temperature and moisture shut off with the buttons on the bottom row. It is also possible to change the temperature shut off threshold by clicking the plus or minus buttons on the temperature shut off button until the desired temperature is shown. The middle row show the current temperature average of all the thermistors and whether the moisture sensors are detecting water (0 being to water 1 being water). If teh middle row cell is clicked or hovered over it displays more information about the sensors.
+This picture shows the default settings and appearance of the ESP32 webpage. The user can change the state of the coils and the pump with the three buttons in the top row. If a button is coloured red then that setting or component is off (no relay is open). All coils are off by default and the pump remains on. The user can also turn on and off temperature and moisture shut off with the buttons on the bottom row. It is also possible to change the temperature shut off threshold by clicking the plus or minus buttons on the temperature shut off button until the desired temperature is shown. The middle row show the current temperature average of all the thermistors and whether the moisture sensors are detecting water (0 being to water 1 being water). If the middle row cell is clicked or hovered over it displays more information about the sensors.
 
 :warning: **Warning:** if the ESP32 crashes or loses power everything will be reset to default settings. :warning:
 
 - **Default Settings:** Coils 1 and 2 are off, the pump is on, temperature shut off is on, moisture shut off is off, and the temperature shut off threshold is 60°C.
+
+## LED Indicators
+- **Green LED:** Normal operation and coils are off
+- **Red LED:** Temperature shut off is active
+- **Orange LED:** Moisture shut off is active
+- **Blue LED:** Coils are on

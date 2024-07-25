@@ -202,6 +202,8 @@ void loop()
     {
       digitalWrite(output22Coil, LOW);
       digitalWrite(output23Coil, LOW);
+      output22Coil = "off";
+      output23Coil = "off";
       outputErrorState = "Temp";
     }
   }
