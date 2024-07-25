@@ -68,7 +68,7 @@ The default IP address is:
 | [PCB](https://jlcpcb.com/)                                                                                         | 1        | ~$5    |
 | Total (without taxes + shipping)                                                                                   |          | $49.82 |
 
-## Notes :warning:
+## Notes :notebook:
 
 Some things that need to be done:
 - Thermistors need to be calibrated
