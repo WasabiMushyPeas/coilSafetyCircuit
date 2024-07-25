@@ -84,5 +84,5 @@ Some things that could be added or changed:
 
 ## More Information :mag_right:
 
-Wifi Tutorial: [Wifi Web Server](https://randomnerdtutorials.com/esp32-access-point-ap-web-server/)
-Thermistor Tutorial: [Thermistor](https://learn.adafruit.com/thermistor/using-a-thermistor)
+[Wifi Tutorial](https://randomnerdtutorials.com/esp32-access-point-ap-web-server/)
+[Thermistor Tutorial](https://learn.adafruit.com/thermistor/using-a-thermistor)
