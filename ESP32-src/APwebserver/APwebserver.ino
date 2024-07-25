@@ -21,7 +21,7 @@ String header;
 // Auxiliary variables to store the current output state
 
 // Pump Relay
-String output6State = "off";
+String output6State = "on";
 
 // Coil Relay
 String output22State = "off";
@@ -141,7 +141,7 @@ void setup()
   pinMode(input21Moisture, INPUT);
 
   // Set outputs to LOW
-  digitalWrite(output6Pump, LOW);
+  digitalWrite(output6Pump, HIGH);
   digitalWrite(output22Coil, LOW);
   digitalWrite(output23Coil, LOW);
 
