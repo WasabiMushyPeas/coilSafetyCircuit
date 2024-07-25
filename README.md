@@ -32,4 +32,4 @@ This safety circuit uses an ESP32 C6 to detect temperature fluctuations or moist
 
 ## Webpage
 
-![alt text](https://github.com/WasabiMushyPeas/coilSafetyCircuit/tree/master/Pictures/webpage.png?raw=true)
+![alt text](https://github.com/WasabiMushyPeas/coilSafetyCircuit/tree/master/Pictures/website.png?raw=true)
