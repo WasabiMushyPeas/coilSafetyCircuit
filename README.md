@@ -86,3 +86,5 @@ Some things that could be added or changed:
 
 [Wifi Tutorial](https://randomnerdtutorials.com/esp32-access-point-ap-web-server/)
 [Thermistor Tutorial](https://learn.adafruit.com/thermistor/using-a-thermistor)
+
+If you have any questions or suggestions start an issue [here](https://github.com/WasabiMushyPeas/coilSafetyCircuit/issues/new)
