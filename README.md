@@ -70,7 +70,7 @@ The default IP address is:
 
 ## Notes :notebook:
 
-:important: Some things that need to be done:
+:heavy_exclamation_mark: Some things that need to be done:
 - Thermistors need to be calibrated
 - Code has not been tested with the PCB yet
 - PCB has not been tested yet
