@@ -29,3 +29,7 @@ This safety circuit uses an ESP32 C6 to detect temperature fluctuations or moist
 | [DC to DC Converter](https://www.digikey.com/en/products/detail/gaptec-electronic/1S4E-0312S1U/13692037) | 3 | $8.31 |
 | [PCB](https://www.pcbway.com/) | 1 | $5 |
 | Total (without taxes + shipping) | | $49.82 |
+
+## Webpage
+
+![alt text](https://github.com/WasabiMushyPeas/coilSafetyCircuit/tree/master/Pictures/webpage.png?raw=true)
