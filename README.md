@@ -3,7 +3,7 @@
 ## Introduction
 This safety circuit uses an ESP32 C6 to detect temperature fluctuations or moisture build up on an electromagnet. It can shut off the coils via relay if needed. The ESP32 also hosts a network and webpage to monitor the status of the coils and set the temperature shut off threshold.
 
-## Specifications
+## Specifications :clipboard:
 - **Power Supply:** USB-C cable to micro controller
 - **Max Continuous Coil Power:** 65v 5A
 - **Max Burst Coil Power:** 65v 35A
@@ -11,7 +11,7 @@ This safety circuit uses an ESP32 C6 to detect temperature fluctuations or moist
 - **Temperature Sensors:** 4 thermistors with an accuracy of ±0.25°C
 
 
-## Webpage
+## Webpage :computer:
 
 ![screenshot](/Pictures/website.png)
 
@@ -21,7 +21,7 @@ This picture shows the default settings and appearance of the ESP32 webpage. The
 
 - **Default Settings:** Coils 1 and 2 are off, the pump is on, temperature shut off is on, moisture shut off is off, and the temperature shut off threshold is 60°C.
 
-## Network
+## Network :satellite:
 
 The webpage can be accessed by connect to the ESP32 network and typing the IP address of the ESP32 into a web browser. The IP address is displayed on the serial monitor when the ESP32 is booting up.
 
@@ -41,7 +41,7 @@ The default IP address is:
 192.168.4.1
 ```
 
-## LED Indicators
+## LED Indicators :bulb:
 - **Green LED:** Normal operation and coils are off
 - **Red LED:** Temperature shut off is active
 - **Orange LED:** Moisture shut off is active
@@ -49,7 +49,7 @@ The default IP address is:
 - **No LED:** Something is very wrong with the ESP32
 
 
-## Parts List
+## Parts List :moneybag:
 
 | Part                                                                                                               | Quantity | Price  |
 | ------------------------------------------------------------------------------------------------------------------ | -------- | ------ |
@@ -68,7 +68,7 @@ The default IP address is:
 | [PCB](https://jlcpcb.com/)                                                                                         | 1        | ~$5    |
 | Total (without taxes + shipping)                                                                                   |          | $49.82 |
 
-## Notes
+## Notes :warning:
 
 Some things that need to be done:
 - Thermistors need to be calibrated
