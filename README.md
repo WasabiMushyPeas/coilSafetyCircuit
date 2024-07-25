@@ -40,8 +40,22 @@ This picture shows the default settings and appearance of the ESP32 webpage. The
 
 - **Default Settings:** Coils 1 and 2 are off, the pump is on, temperature shut off is on, moisture shut off is off, and the temperature shut off threshold is 60°C.
 
+**SSID and Password:**
+```
+SSID: ESP32-Access-Point
+Password: rydberg12
+```
+
+The webpage can be accessed by connect to the ESP32 network and typing the IP address of the ESP32 into a web browser. The IP address is displayed on the serial monitor when the ESP32 is booting up. The default IP address is:
+```
+192.168.4.1
+```
+
 ## LED Indicators
 - **Green LED:** Normal operation and coils are off
 - **Red LED:** Temperature shut off is active
 - **Orange LED:** Moisture shut off is active
 - **Blue LED:** Coils are on
+- **No LED:** Something is very wrong with the ESP32
+
+## Notes
