@@ -81,6 +81,7 @@ Some things that could be added or changed:
 - When connected to the network the control page should pop up automatically using captive portals
 - Add a way for ESP32 to get power from the pump power supply
 - connect the ESP32 to the lab warning system and trigger when the coils get too hot or wet
+- Have the Website accessable out of the lab by having the ESP32 connect to the internet and port forward the website port
 
 ## More Information :mag_right:
 
